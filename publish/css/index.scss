@@ -1,0 +1,182 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ol,ul,li {
+    list-style: none;
+}
+
+// 去除超链接默认样式
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+/* 解决图片存在的bug */
+img {
+    border: 0;     
+    /*在IE9以下浏览器中，如果是a标签包裹的img,则会出现边框线*/
+    display: block;    
+    /*块状元素包裹img,在块状元素的底部会多出3像素左右的间距*/
+}
+
+// 公共导航栏cnv属性
+#cnv {
+	height: 30px;
+	background-color: #ccc;
+	line-height: 30px;
+}
+
+.w {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.cnv_left {
+	height: 30px;
+	float: left;
+	.cnv_left_span {
+		float: left;
+	}
+	.cnv_left_p {
+		height: 30px;
+		float: left;
+		margin: 0;
+	}
+}
+
+.cnv_right {
+	float: right;
+	.cnv_right_li {
+		float: left;
+		.spacer {
+			margin: 0 5px;
+		}
+	}
+}
+
+.logo a {
+	display: block;
+	width: 175px;
+	height: 56px;
+	font-size: 0;
+}
+
+.search {
+	position: absolute;
+	top: 25px;
+	left: 348px;
+}
+
+.text {
+	float: left;
+	width: 445px;
+	height: 32px;
+	border: 2px solid #b1191a;
+	padding-left: 10px;
+	color: #ccc;
+}
+
+.btn {
+	float: left;
+	width: 82px;
+	height: 36px;
+	background-color: #b1191a;
+	border: 0;
+	font-size: 16px;
+	color: #fff;
+}
+
+#nav {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background-color: red;
+	.w {
+		margin: 0 auto;
+		.nav_ul li {
+			float: left;
+			width: 130px;
+			text-align: center;
+			a {
+				color: #fff;
+			}
+		}
+	}
+}
+
+#banner {
+	width: 100%;
+	height: 340px;
+	.banner_img {
+		margin-left: -200px;
+	}
+}
+
+#content {
+	width: 100%;
+	.content_biqiang {
+		font-size: 30px;
+		height: 80px;
+		line-height: 80px;
+		color: orange;
+	}
+	.biqiang_img {
+		height: 372px;
+		.biqiang_img_left {
+			width: 240px;
+			height: 372px;
+			padding: 15px;
+			float: left;
+			border: 1px solid #ccc;
+			.img_message {
+				width: 210px;
+				height: 342px;
+				padding: 15px;
+				.img_message_img {
+					width: 180px;
+					height: 180px;
+					margin-bottom: 20px;
+					img {
+						width: 180px;
+						height: 180px;
+					}
+				}
+				.text_1 {
+					font-size: 16px;
+				}
+				.text_2 {
+					font-size: 30px;
+					.text_2_num {
+						float: left;
+					}
+					.text_2_goumai {
+						float: right;
+						font-size: 14px;
+						position: relative;
+						top: 30px;
+					}
+				}
+			}
+		}
+	}
+}
+
+#footer {
+	width: 100%;
+	.footer_img {
+		height: 102px;
+	}
+	.links {
+		height: 26px;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.copyright {
+		text-align: center;
+	}
+
+}
+
+

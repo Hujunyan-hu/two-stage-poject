@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <title>Document</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 600px;
+        }
+
+        #head {
+            width: 600px;
+            height: 100px;
+            padding-top: 20px;
+        }
+
+        #head .head_left {
+            float: left;
+        }
+
+        #head .head_right {
+            float: right;
+            margin-top: 40px;
+        }
+
+
+        #box {
+            width: 600px;
+            height: 400px;
+            border: 3px solid rgb(245, 132, 58);
+            margin: 0 auto;
+            padding: 80px;
+        }
+
+        #box .box_form {
+            width: 100%;
+            height: 100%;
+        }
+
+        #box .frame {
+            width: 300px;
+        }
+
+        #footer {
+            width: 1000px;
+            height: 200px;
+            padding-top: 50px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #footer .links {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        #footer .copyright {
+            font-size: 12px;
+            line-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/QF.js"></script>
+    <div class="container">
+        <div id="head">
+            <div class="head_left">
+                <a href=""><img src="../images/logo.png" alt=""></a>
+            </div>
+            <div class="head_right">
+                <p>已经注册, <a href="./login.html">现在登陆 》</a></p>
+            </div>
+        </div>
+        <div id="box">
+            <form class="box_form">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">设置账号</label>
+                    <input type="text" class="form-control frame" id="username" placeholder="请输入以字母开头6-10位长度的账号">
+                    <span id="usernamePic"></span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">设置密码</label>
+                    <input type="password" class="form-control frame" id="password" placeholder="请输入以字母开头6-10位长度的密码">
+                    <span id="passwordPic"></span>
+                </div>
+                <label>
+                    <input type="checkbox">
+                    <p>我已阅读并同意<a href="">《惠买用户服务承诺》</a></p>
+                </label>
+                <br>
+                <button type="button" id="submitBtn" class="btn btn-danger">注册</button>
+            </form>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="links">
+            首页 | 惠买 | 优购物 | 联系我们 | 招贤纳士 | 招商专区 | 供应商入口 | 友情链接 | 网站地图 | 咨询中心 | 评论 | 图片
+        </p>
+        <p class="copyright">
+            惠买（优购物）全球优品特卖网站 专属于千万女性的优品特卖网站,惠买（优购物）电视购物官方网站,100%正品保证 支持货到付款.<br>
+            Copyright©2007-2019 公司名称:北京惠买网络科技有限公司 统一社会信用代码:91110302339739621C ICP备案号:京ICP备15039150号-1<br>
+            公司地址:北京市北京经济技术开发区同济南路19号7幢2层C区 联系方式:400-707-0707 营业执照京网文(2017)10902-1271 增值业务经营许可证：京B2-20181380<br>
+            京公网安备 11030102010023号
+        </p>
+    </div>
+    <script>
+        ; (function () {
+            // 获取元素
+            var $username = $("#username");
+            var $password = $("#password");
+            var $submitBtn = $("#submitBtn");
+            var $usernamePic = $("#usernamePic");
+            var $passwordPic = $("#passwordPic");
+
+            // 定义锁，决定是否验证通过
+            var user_lock = false;
+            var pass_lock = false;
+
+            // 账号输入框失去焦点发送请求到服务器
+            $username.on('blur', function () {
+                // 获取用户输入的文本
+                var $val = $username.val()
+                // 正则表达式
+                var $reg = /^[a-zA-Z]\w{5,9}$/;
+                // 验证是否符合正则表达式
+                if (!$reg.test($val)) {
+                    $usernamePic[0].innerHTML = "该账号格式有误，请重新输入";
+                    $usernamePic.css ({
+                        "color" : "red"
+                    });
+                    user_lock = false;
+                    return;
+                }
+                // 发送ajax，检查用户名是否已存在
+                $.ajax({
+                    url: "../php/checkusername.php",
+                    type: "get",
+                    data: {
+                        username: $username.val()
+                    },
+                    dataType: "json",
+                    success(data) {
+                        console.log(data);
+                        if (data.error == 0) {
+                            $usernamePic[0].innerHTML = "该账号可以使用";
+                            $usernamePic.css ({
+                                "color" : "green",
+                            });
+                            user_lock = true;
+                        } else {
+                            $usernamePic[0].innerHTML = "该用户已存在，请重新输入";
+                            $usernamePic.css({
+                                "color" : "red"
+                            });
+                            user_lock = false;
+                        }
+                    }
+                })
+            })
+
+            $password.on('blur', function () {
+                var $val = $password.val();
+                var $reg = /^[a-zA-Z]\w{5,9}$/;
+                if (!$reg.test($val)) {
+                    $passwordPic[0].innerHTML = "密码格式不正确，请重新输入";
+                    $passwordPic.css ({
+                        "color" : "red",
+                    });
+                    pass_lock = false;
+                    return;
+                } else {
+                    $passwordPic[0].innerHTML = "密码格式正确";
+                    $passwordPic.css ({
+                        "color" : "green",
+                    });
+                    pass_lock = true;
+                }
+            })
+
+            // 当两项内容都通过后，点击按钮向数据库添加数据
+            $submitBtn.on('click', function () {
+                if (!(user_lock && pass_lock)) {
+                    return;
+                }
+
+                $.ajax({
+                    url: "../php/regist.php",
+                    type: "post",
+                    data: {
+                        username: $username.val(),
+                        password: $password.val(),
+                    },
+                    dataType: "json",
+                    
+                    success(data) {
+                        console.log(11111)
+                        if (data.error == 0) {
+                            
+                            alert(data.msg);
+                            // 成功后跳转页面
+                            location.href = "./login.html";
+                        } else {
+                            alert("注册失败");
+                        }
+                    }
+                })
+            })    
+        })()
+    </script>
+</body>
+</html>
